@@ -1,4 +1,7 @@
 certifi==2022.5.18.1
 mysql==0.0.3
+mysql-connector-python==8.0.25
 mysqlclient==2.1.0
+protobuf==4.21.1
 wincertstore==0.2
+numpy
