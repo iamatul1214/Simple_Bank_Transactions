@@ -1,4 +1,5 @@
 import argparse
+import yaml
 from Bank_account import Bank_Account
 def read_yaml(path_to_yaml: str) -> dict:
     with open(path_to_yaml) as yaml_file:
@@ -23,5 +24,6 @@ if __name__ == '__main__':
     args = argparse.ArgumentParser()
     args.add_argument("--config", "-c", default="configs/config.yaml")
     parsed_args = args.parse_args()
+    main(config_path=parsed_args.config)
 
 
