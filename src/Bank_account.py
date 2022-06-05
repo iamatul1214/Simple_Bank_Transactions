@@ -11,9 +11,7 @@ class Bank_Account:
             print("*******************Welcome to the Bank**************************")
     
         def deposit(self):
-            amount=float(input("\n Enter amount to be Deposited: "))
-            self.balance += amount
-            print(f"\n Amount Deposited : {amount}")
+            pass
     
         def withdraw(self,account_id,amount):
             try:
@@ -68,7 +66,7 @@ class Bank_Account:
         def insert_bulk_records(self,table_name,list_values):
             try:
                 for i in range(len(list_values)):
-                    print(f"First set of values to be inserted = {list_values[i]}")
+                    # print(f"First set of values to be inserted = {list_values[i]}")
                     query = f"INSERT INTO {table_name} VALUES {list_values[i]}"
                     print(query)
                     # query = "INSERT INTO bank_account VALUES (%i,%i)"
