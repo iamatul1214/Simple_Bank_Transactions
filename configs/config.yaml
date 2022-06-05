@@ -1,0 +1,6 @@
+## It contains all the configs required for our database transactions
+DB:
+  hostname: localhost
+  username: root
+  password: Akshat1214
+  db_name: ineuron_tech_assignment
