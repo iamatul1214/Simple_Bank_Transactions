@@ -22,10 +22,11 @@ class Bank_Account:
                 cursor = self.dbObject.cursor()
                 # self.cursor.callproc(withdraw_amount_procedure,args=args)
                 cursor.callproc(withdraw_amount_procedure,args=args)
-                # self.dbObject.commit()
+                self.dbObject.commit()
+                print(f"Withdrawal of amount {amount} is successfull")
                 for results in cursor.stored_results():
                     print(results.fetchall())
-                raise DatabaseError("Enter amount more than 0")
+                # raise DatabaseError("Enter amount more than 0")
             except Exception as e:
                 print(f"Error occured while withdrawing {e}")
             finally:
@@ -46,9 +47,44 @@ class Bank_Account:
                 print(f"Exception occured while retrieving the balance amount {e}")
             finally:
                 cursor.close()
+
+
+        def insert_record(self,table_name,values):
+            try:
+                # values = (1005,'2005', '3005',1,8500)
+                query = f"INSERT INTO {table_name} VALUES {values}"
+                cursor = self.dbObject.cursor()
+                cursor.execute(query)
+                self.dbObject.commit()
+                print("record inserted")
+            except Exception as e:
+                self.dbObject.rollback()
+                print(f"Exception occured while inserting records into the table {table_name} : {e}")
+            finally:
+                cursor.close()
+    
+
+
+        def insert_bulk_records(self,table_name,list_values):
+            try:
+                for i in range(len(list_values)):
+                    print(f"First set of values to be inserted = {list_values[i]}")
+                    query = f"INSERT INTO {table_name} VALUES {list_values[i]}"
+                    print(query)
+                    # query = "INSERT INTO bank_account VALUES (%i,%i)"
+                    cursor = self.dbObject.cursor()
+                    cursor.execute(query)
+                    self.dbObject.commit()
+                    print(f" {i+1} record inserted")
+
+            except Exception as e:
+                 self.dbObject.rollback()
+                 print(f"Exception occured while inserting records as bulk into the table {table_name} : {e}")
+            finally:
+                cursor.close()
+    
     except Exception as e:
         print(e)
-    
             
 
 

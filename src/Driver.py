@@ -16,9 +16,14 @@ def main(config_path):
 
     print("executing driver")
     b = Bank_Account(hostname=hostname,username = username,password=password, dbname=db_name)
-    b.display_amount(account_id=2002)
-    # b.withdraw(account_id=2001, amount=4000)
-
+    # b.display_amount(account_id=2002)
+    # b.withdraw(account_id=2002, amount=1)
+    # b.display_amount(account_id=2002)
+    # values = (1006,2006, 3006,1,50000)
+    # b.insert_record(table_name='bank_account',values=values)
+    values_bulk = [(1007,2007, 3007,1,5000),(1008,2008, 30068,1,6750)]
+    print(type(values_bulk))
+    b.insert_bulk_records(table_name='bank_account',list_values=values_bulk)
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
