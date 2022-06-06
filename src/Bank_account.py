@@ -1,5 +1,8 @@
 from Db_Connection import sql_connection
 import numpy as np
+import pandas as pd
+from datetime import datetime
+import os
 
 class Bank_Account:
     try:
@@ -43,6 +46,33 @@ class Bank_Account:
                 print(f"Amount in the bank account is = Rs {amount}")
             except Exception as e:
                 print(f"Exception occured while retrieving the balance amount {e}")
+            finally:
+                cursor.close()
+
+        def retrieve_transactions(self,from_date,to_date):
+            try:
+                trans_history = 'transaction_history'
+                args=[from_date,to_date]
+                transactions=[]
+                cursor = self.dbObject.cursor()
+                cursor.callproc(trans_history,args=args)
+                for results in cursor.stored_results():
+                    result = results.fetchall()
+                for result in result:
+                    print(result)
+                    transactions.append(result)
+                df = pd.DataFrame(transactions,columns=['Date','user_id','bank_account_id','withdrawn_amt'])
+                print(f"The transacation details from {from_date} to {to_date} looks like :\n\n {df}")
+
+                ## saving the transaction into excel
+                time = datetime.now().strftime("%d_%m_%Y-%I_%M_%S_%p")
+                filename = time +'_'+"transaction"+".csv"
+                filename = os.path.join("account_statement",filename)
+                df.to_csv(filename)
+                print(f"Saved the transaction dataframe into excel file at location : {filename}")
+
+            except Exception as e:
+                print(f"Exception occured while retreiving the transcations by calling procedure {trans_history} : {e}")
             finally:
                 cursor.close()
 

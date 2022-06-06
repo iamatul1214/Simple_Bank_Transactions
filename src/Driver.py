@@ -1,6 +1,8 @@
 import argparse
 import yaml
 from Bank_account import Bank_Account
+
+
 def read_yaml(path_to_yaml: str) -> dict:
     with open(path_to_yaml) as yaml_file:
         content = yaml.safe_load(yaml_file)
@@ -30,7 +32,7 @@ def main(config_path):
     # user_choice = int(input("Enter your choice from above menu"))
     user_choice = 0
     while user_choice != 4:
-        print(" Press 1 to check balance \n Press 2 to withdraw amount \n Press 3 to insert a record\n Press 4 to exit")
+        print(" Press 1 to check balance \n Press 2 to withdraw amount \n Press 3 to insert a record\n Press 4 to see transaction history\nPress 5 to exit")
         user_choice = int(input("Enter your choice from above menu"))
         if user_choice == 1:
             account_id = int(input("Please enter the account id to check the balance"))
@@ -48,7 +50,11 @@ def main(config_path):
             amount = int(input("Please enter the amount"))
             values = (userid,account_id,account_num,user_active,amount)
             b.insert_record(table_name=table_name, values=values)
-        elif user_choice==4:
+        elif user_choice == 4:
+            from_date = str(input("Enter from date in format of YYYY-MM-DD"))
+            to_date = str(input("Enter to date in format of YYYY-MM-DD"))
+            b.retrieve_transactions(from_date = from_date, to_date = to_date)
+        elif user_choice==5:
             print("Exiting the menu........")
             break
         else:
